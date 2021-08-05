@@ -32,3 +32,6 @@ class Board(models.Model):
 
     def __str__(self):
         return f'{self.owner_id}: {self.name}'
+
+    def get_absolute_url(self):
+        return f'/board/{self.id}/'

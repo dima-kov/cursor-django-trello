@@ -87,3 +87,6 @@ class Task(models.Model):
 
     def __str__(self):
         return f'Task: {self.assigned_to_id}'
+    
+    def get_absolute_url(self):
+        return f'/board/{self.board_id}/task/{self.id}/'

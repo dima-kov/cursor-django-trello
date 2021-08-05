@@ -24,5 +24,9 @@ urlpatterns = [
     path(
         'board/',
         include('apps.boards.urls')
+    ),
+    path(
+        '',
+        include('apps.tasks.urls')
     )
 ]

@@ -1,35 +1,12 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import AnonymousUser
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.views import generic as views
 
+from apps.boards.forms import BoardEditForm
 from apps.boards.models import Board
-from django.views import View
-from django.views.generic import TemplateView, RedirectView, CreateView, DetailView, ListView
 
 
-class BoardTemplateView(TemplateView):
-    template_name = 'index.html'
-
-
-class BoardRedirectTemplateView(RedirectView):
-    url = '/'
-
-
-class NewBoardView(CreateView):
-    model = Board
-
-
-def boards(request):
-    boards = Board.objects.filter(owner=request.user)
-    return render(
-        request,
-        'boards/list.html',
-        {'boards': boards}
-    )
-
-
-class BoardsListView(ListView):
+class BoardsListView(LoginRequiredMixin, views.ListView):
     model = Board.objects.filter()
     context_object_name = 'boards'
     template_name = 'boards/list.html'
@@ -38,17 +15,40 @@ class BoardsListView(ListView):
         return Board.objects.filter(owner=self.request.user)
 
 
-class DetailBoardView(DetailView):
+class DetailBoardView(LoginRequiredMixin, views.DetailView):
     model = Board
     pk_url_kwarg = 'board_pk'
     template_name = 'boards/detail.html'
     context_object_name = 'board'
 
+    def dispatch(self, request, *args, **kwargs):
+        board = self.get_object()
+        if request.user.is_authenticated and board.owner_id == request.user.id:
+            return super().dispatch(request, *args, **kwargs)
+        return redirect('/board/')
 
-def detail_board(request, board_pk):
-    board = get_object_or_404(Board, id=board_pk)
-    return render(
-        request,
-        'boards/detail.html',
-        {'board': board}
-    )
+
+class BoardCreateView(LoginRequiredMixin, views.CreateView):
+    model = Board
+    template_name = 'boards/new.html'
+    fields = ['name', 'description']
+    login_url = '/admin/login/'
+
+    def form_valid(self, form):
+        obj: Board = form.save(commit=False)
+        obj.owner = self.request.user
+        obj.save()
+        return redirect('/')
+
+
+class BoardEditView(LoginRequiredMixin, views.UpdateView):
+    model = Board
+    form_class = BoardEditForm
+    template_name = 'boards/edit.html'
+    pk_url_kwarg = 'board_pk'
+
+    def dispatch(self, request, *args, **kwargs):
+        board = self.get_object()
+        if request.user.is_authenticated and board.owner_id == request.user.id:
+            return super().dispatch(request, *args, **kwargs)
+        return redirect('/board/')
