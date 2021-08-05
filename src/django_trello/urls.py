@@ -28,5 +28,9 @@ urlpatterns = [
     path(
         '',
         include('apps.tasks.urls')
-    )
+    ),
+    path(
+        'board/<int:board_pk>/members/',
+        include('apps.members.urls')
+    ),
 ]

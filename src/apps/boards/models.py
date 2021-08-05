@@ -23,6 +23,9 @@ class Board(models.Model):
         max_length=255,
     )
     description = models.TextField()
+    members = models.ManyToManyField(
+        USER_MODEL,
+    )
 
     objects = BoardQuerySet.as_manager()
 

@@ -1,0 +1,10 @@
+<form action="" method="POST">
+  {% csrf_token %}
+
+  <div>
+    {{ form.user.label }}
+    {{ form.user }}
+  </div>
+
+  <button type="submit">Додати юзера</button>
+</form>

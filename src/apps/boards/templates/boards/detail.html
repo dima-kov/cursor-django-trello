@@ -3,6 +3,14 @@
 <a href="/board/{{ board.id }}/new/">Add task</a>
 <hr>
 <div>
+  Members: (<a href="/board/{{ board.id}}/members/new/">New</a>)
+  <ul>
+    {% for user in board.members.all %}
+      <li>{{ user.username }}</li>
+    {% endfor %}
+  </ul>
+</div>
+<div>
   Tasks:
   <div>
     {% for task in board.tasks.all %}
