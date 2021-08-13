@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main_container %}
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for task in tasks %}
+      {% include 'particals/card.html' %}
+    {% endfor %}
+  </div>
+
+  <h3>{{ user_json }}</h3>
+{% endblock %}

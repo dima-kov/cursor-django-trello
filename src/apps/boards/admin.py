@@ -1,18 +1,30 @@
 from django.contrib import admin
 
-from apps.boards.models import Board
+# Register your models here.
+from django.utils.safestring import mark_safe
+
+from apps.boards.models import Board, Col, Comment, Task
+
+admin.site.register(Board)
+admin.site.register(Comment)
 
 
-class BoardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'owner', 'display_tasks_count')
-    search_fields = ('name', )
+@admin.register(Col)
+class ColModelAdmin(admin.ModelAdmin):
+    search_fields = ('name',)
+
+
+@admin.register(Task)
+class TaskAdminModel(admin.ModelAdmin):
+    search_fields = ("name",)
+    autocomplete_fields = ('col',)
+    ordering = ('-updated_at', )
+    list_filter = ("status", )
+    list_display = ("id", "name", 'view_status', 'created_by')
+    list_per_page = 5
+
+    def view_status(self, obj):
+        return mark_safe("<i>asfasfsa</i>")
 
     def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.annotate_tasks_count()
-
-    def display_tasks_count(self, obj):
-        return obj.tasks_count
-
-
-admin.site.register(Board, BoardAdmin)
+        return super().get_queryset(request).select_related('created_by')

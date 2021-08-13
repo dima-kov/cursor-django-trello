@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block main_container %}
+  <main class="form-signin" >
+    <form method="post" action="{% url 'users:profile-update-page' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal">Update Profile Avatar</h1>
+
+      <div class="form-floating">
+        <input type="file" name="avatar" class="form-control-file" id="floatingInput" placeholder="Upload user Avatar">
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+      <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
+    </form>
+  </main>
+
+{% endblock %}

@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.urls import path
 
-from apps.boards.api_views import BoardListCreateView
-from apps.boards.views import BoardDetailView, CreateCommentView, DeleteComment
+from apps.users.views import LoginView, UpdateUserView
 
-app_name = 'boards'
+app_name = 'users'
 
 urlpatterns = [
-    path('', BoardListCreateView.as_view(), name='board-list')
+    path('login/', LoginView.as_view(), name='login-page'),
+    path('profile/update', UpdateUserView.as_view(), name='profile-update-page')
 ]
