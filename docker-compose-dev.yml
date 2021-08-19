@@ -28,11 +28,11 @@ services:
       - "8080:8080"  # port for pycharm server
     depends_on:
       - postgres
-#      - redis
-#  redis:
-#      restart: always
-#      image: redis:5.0.7
-#      volumes:
-#          - ./data/redis:/.data:rw
-#      ports:
-#        - 6379:6379
+      - redis
+  redis:
+      restart: always
+      image: redis:5.0.7
+      volumes:
+          - ./data/redis:/.data:rw
+      ports:
+        - 6379:6379

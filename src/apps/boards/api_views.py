@@ -10,6 +10,7 @@ from apps.boards.serializers.board import BoardSerializer
 class BoardListCreateView(generics.ListCreateAPIView):
     serializer_class = BoardSerializer
     permission_classes = (IsAuthenticated, BoardReadOnlyOrIsOwnerOnly)
+    # CACHE_TTL = 60
 
     def get_queryset(self):
         queryset = Board.objects.all()
