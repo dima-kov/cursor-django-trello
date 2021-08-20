@@ -8,6 +8,7 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
     path('v1/', include('apps.api_v1.urls')),
+    path('boards/', include('apps.boards.urls')),
 ]
 
 if settings.DEBUG:

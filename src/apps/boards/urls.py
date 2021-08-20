@@ -21,5 +21,6 @@ from apps.boards.views import BoardDetailView, CreateCommentView, DeleteComment
 app_name = 'boards'
 
 urlpatterns = [
-    path('', BoardListCreateView.as_view(), name='board-list')
+    path('', BoardListCreateView.as_view(), name='board-list'),
+    path('<int:pk>/', BoardDetailView.as_view(), name='board-detail'),
 ]

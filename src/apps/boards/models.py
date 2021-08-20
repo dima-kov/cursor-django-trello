@@ -34,6 +34,9 @@ class Board(SoftDeleteAuditAbstractModel):
         )
         ordering = ('-created_at',)
 
+    def get_users_count(self):
+        return self.users.all().count()
+
 
 class Col(SoftDeleteAuditAbstractModel):
     name = models.CharField(max_length=32, blank=False, db_index=True)
@@ -69,6 +72,7 @@ class Task(SoftDeleteAuditAbstractModel):
         max_length=3000,
         null=True
     )
+    protected = models.BooleanField()
     col = models.ForeignKey(to=Col, on_delete=models.SET_NULL, null=True, related_name='tasks')
 
     def __str__(self):
