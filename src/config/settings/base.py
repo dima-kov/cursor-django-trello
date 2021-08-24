@@ -146,9 +146,7 @@ STATIC_ROOT = env.str('STATIC_ROOT', BASE_DIR)
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATICFILES_DIRS = []
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
