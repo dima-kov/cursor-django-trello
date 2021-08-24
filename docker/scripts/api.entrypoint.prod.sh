@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-
-gunicorn trello.src.config.wsgi -b 0.0.0.0:8000 || { echo 'runserver failed' ; exit 1; }
+cd trello/src && gunicorn config.wsgi:application -b 0.0.0.0:8000 || { echo 'runserver failed' ; exit 1; }
