@@ -4,3 +4,4 @@ psycopg2-binary==2.8.6
 Pillow==8.1.2
 djangorestframework==3.12.4
 django-redis
+django-debug-toolbar
