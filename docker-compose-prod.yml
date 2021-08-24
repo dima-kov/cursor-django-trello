@@ -8,6 +8,8 @@ services:
     container_name: trello_api
     volumes:
       - .:/trello
+      - ../static:/static
+      - ../media:/media
     command: trello/docker/scripts/api.entrypoint.prod.sh
     env_file:
       - ./docker/envs/.env-prod
