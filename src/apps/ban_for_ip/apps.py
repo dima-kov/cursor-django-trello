@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class BanForIpConfig(AppConfig):
-    name = 'ban_for_ip'
+    name = 'apps.ban_for_ip'
